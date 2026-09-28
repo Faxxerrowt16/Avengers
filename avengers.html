@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Avengers - Member Information</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --blue-900: #1e1b4b; --blue-800: #312e81; --blue-700: #3730a3; --blue-600: #4f46e5;
+  --blue-500: #6366f1; --blue-400: #818cf8; --blue-300: #a5b4fc; --blue-200: #c7d2fe;
+  --blue-100: #e0e7ff; --blue-50: #eef2ff; --magenta-900: #700a5e; --magenta-800: #9d176d;
+  --magenta-700: #be187d; --magenta-600: #d946ef; --magenta-500: #e879f9; --magenta-400: #f0abfc;
+  --magenta-300: #f5d0fe; --magenta-200: #fae8ff; --magenta-100: #fef3ff; --magenta-50: #fdf4ff;
+  --gray-900: #111827; --gray-800: #1f2937; --gray-700: #374151; --gray-600: #4b5563;
+  --gray-500: #6b7280; --gray-400: #9ca 3af; --gray-300: #d1d5db; --gray-200: #e5e7eb;
+  --gray-100: #f3f4f6; --gray-50: #f9fafb; --white: #ffffff;
+  --bg-primary: var(--white); --bg-secondary: var(--gray-50); --bg-card: var(--white);
+  --text-primary: var(--gray-900); --text-secondary: var(--gray-600); --text-light: var(--gray-500);
+  --border: var(--gray-200); --accent-blue: var(--blue-600); --accent-magenta: var(--magenta-600);
+  --gradient-primary: linear-gradient(135deg, var(--blue-600), var(--magenta-600));
+  --gradient-hero: linear-gradient(135deg, var(--blue-700) 0%, var(--magenta-700) 100%);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05); --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px; --transition: 0.3s ease;
+}
+* { margin: 0; 
+    padding: 0; 
+     box-sizing: 
+      border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+h1, h2, h3, h4, h5, h6 { font-family: 'Space Grotesk', sans-serif; line-height: 1.2; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; }
+.section-header { text-align: center; margin-bottom: 60px; }
+.section-label { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-magenta); margin-bottom: 12px; }
+.section-title { font-size: clamp(32px, 5vw, 48px); font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 16px; }
+.section-subtitle { font-size: 18px; color: var(--text-secondary); max-width: 500px; margin: 0 auto; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; border-radius: var(--radius-sm); font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: all var(--transition); font-family: 'Inter', sans-serif; }
+.btn-primary { background: var(--gradient-primary); color: var(--white); box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5); }
+.btn-secondary { background: transparent; color: var(--text-primary); border: 2px solid var(--border); }
+.btn-secondary:hover { border-color: var(--accent-blue); color: var(--accent-blue); transform: translateY(-2px); }
+.btn-full { width: 100%; }
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); transition: all var(--transition); }
+.nav-container { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+.nav-logo { font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.nav-links { display: flex; gap: 36px; }
+.nav-link { font-size: 14px; font-weight: 500; color: var(--text-secondary); transition: color var(--transition); position: relative; }
+.nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gradient-primary); transition: width var(--transition); }
+.nav-link:hover { color: var(--text-primary); }
+.nav-link:hover::after { width: 100%; }
+.hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; transition: all var(--transition); }
+.hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding: 120px 0 80px; background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); }
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.gradient-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.3; animation: float 8s ease-in-out infinite; }
+.blob-1 { width: 500px; height: 500px; background: var(--blue-500); top: -100px; right: -100px; animation-delay: 0s; }
+.blob-2 { width: 400px; height: 400px; background: var(--magenta-500); bottom: -50px; left: -50px; animation-delay: 2s; }
+.blob-3 { width: 300px; height: 300px; background: #f59e0b; top: 40%; left: 50%; animation-delay: 4s; }
+@keyframes float { 0%, 100% { transform: translate(0, 0) scale(1); } 33% { transform: translate(30px, -30px) scale(1.05); } 66% { transform: translate(-20px, 20px) scale(0.95); } }
+.hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+.hero-greeting { font-size: 18px; font-weight: 500; color: var(--blue-300); margin-bottom: 8px; }
+.hero-name { font-size: clamp(48px, 8vw, 80px); font-weight: 700; line-height: 1.05; margin-bottom: 12px; color: var(--white); }
+.hero-title { font-size: clamp(20px, 3vw, 28px); font-weight: 500; color: var(--magenta-400); margin-bottom: 20px; font-family: 'Space Grotesk', sans-serif; }
+.hero-desc { font-size: 18px; color: var(--gray-300); max-width: 480px; margin-bottom: 36px; line-height: 1.7; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.hero-visual { display: flex; justify-content: center; }
+.hero-card { background: rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 24px; width: 340px; box-shadow: var(--shadow-xl); transform: rotate(2deg); transition: transform var(--transition); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); }
+.hero-card:hover { transform: rotate(0deg) scale(1.02); }
+.card-header { display: flex; gap: 8px; margin-bottom: 20px; }
+.card-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--gray-600); }
+.card-dot.magenta { background: var(--magenta-500); }
+.card-dot.blue { background: var(--blue-500); }
+.card-body { font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.8; }
+.code-line { color: var(--gray-300); }
+.code-indent { color: var(--gray-300); padding-left: 20px; }
+.keyword { color: #a78bfa; }
+.var { color: var(--blue-300); }
+.string { color: #a3e635; }
+.func { color: #fbbf24; }
+.scroll-indicator { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 1; }
+.scroll-line { width: 2px; height: 60px; background: rgba(255,255,255,0.2); position: relative; overflow: hidden; border-radius: 2px; }
+.scroll-line::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--gradient-primary); animation: scrollDown 2s ease-in-out infinite; }
+@keyframes scrollDown { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+.members { background: var(--bg-secondary); }
+.filter-bar { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 48px; }
+.filter-btn { padding: 10px 24px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg-card); font-size: 14px; font-weight: 500; cursor: pointer; transition: all var(--transition); font-family: 'Inter', sans-serif; color: var(--text-secondary); }
+.filter-btn:hover { border-color: var(--accent-blue); color: var(--accent-blue); }
+.filter-btn.active { background: var(--gradient-primary); color: var(--white); border-color: transparent; box-shadow: 0 4px 14px rgba(99,102,241,.3); }
+.members-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 32px; }
+.member-card { background: var(--bg-card); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); transition: all var(--transition); cursor: pointer; display: flex; flex-direction: column; }
+.member-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); }
+.member-banner { height: 200px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.member-banner .member-initial { font-family: 'Space Grotesk', sans-serif; font-size: 80px; font-weight: 700; color: rgba(255,255,255,.9); text-shadow: 0 4px 20px rgba(0,0,0,.3); }
+.member-info { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.member-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; color: var(--text-primary); }
+.member-alias { font-size: 14px; color: var(--accent-blue); font-weight: 500; margin-bottom: 12px; }
+.member-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex-shrink: 0; }
+.member-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.member-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--blue-50); color: var(--blue-700); }
+.member-stats { display: flex; justify-content: space-between; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.member-stat { text-align: center; }
+.member-stat-val { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary); }
+.member-stat-label { font-size: 11px; color: var(--text-light); }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); backdrop-filter: blur(4px); z-index: 2000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all var(--transition); padding: 24px; }
+.modal-overlay.open { opacity: 1; visibility: visible; }
+.modal { background: var(--bg-card); border-radius: var(--radius-lg); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; transform: scale(.9) translateY(20px); transition: transform var(--transition); box-shadow: var(--shadow-xl); }
+.modal-overlay.open .modal { transform: scale(1) translateY(0); }
+.modal-banner { height: 180px; position: relative; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0; display: flex; align-items: center; justify-content: center; }
+.modal-banner .member-initial { font-family: 'Space Grotesk', sans-serif; font-size: 100px; font-weight: 700; color: rgba(255,255,255,.9); text-shadow: 0 4px 20px rgba(0,0,0,.3); }
+.modal-close { position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,.3); border: none; color: var(--white); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--transition); z-index: 10; }
+.modal-close:hover { background: rgba(0,0,0,.5); }
+.modal-body { padding: 32px; }
+.modal-name { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+.modal-alias { font-size: 16px; color: var(--accent-blue); font-weight: 500; margin-bottom: 20px; }
+.modal-section { margin-bottom: 20px; }
+.modal-section h4 { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-magenta); margin-bottom: 8px; }
+.modal-section p { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+.modal-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+.modal-stat { background: var(--bg-secondary); border-radius: var(--radius-md); padding: 16px; text-align: center; }
+.modal-stat-val { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.modal-stat-label { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+.modal-powers { display: flex; flex-wrap: wrap; gap: 8px; }
+.modal-power { font-size: 13px; font-weight: 500; padding: 6px 14px; border-radius: 999px; background: var(--magenta-50); color: var(--magenta-700); border: 1px solid var(--magenta-200); }
+.avengers-about { background: var(--bg-secondary); }
+.about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; align-items: center; }
+.about-visual { display: flex; justify-content: center; }
+.about-avengers-logo { width: 280px; height: 280px; border-radius: var(--radius-xl); overflow: hidden; box-shadow: var(--shadow-lg); background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); display: flex; align-items: center; justify-content: center; }
+.about-text p { color: var(--text-secondary); margin-bottom: 16px; font-size: 16px; line-height: 1.8; }
+.about-lead { font-size: 18px !important; color: var(--text-primary) !important; font-weight: 500; }
+.about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
+.stat { text-align: center; }
+.stat-number { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 32px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-label { font-size: 13px; color: var(--text-light); }
+.footer { background: var(--gray-900); padding: 32px 0; }
+.footer-content { display: flex; justify-content: space-between; align-items: center; color: var(--gray-400); font-size: 14px; }
+.back-to-top { position: fixed; bottom: 32px; right: 32px; width: 44px; height: 44px; border-radius: 50%; background: var(--gradient-primary); color: var(--white); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all var(--transition); box-shadow: var(--shadow-lg); z-index: 100; }
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { transform: translateY(-4px); }
+@media (max-width: 1024px) { .hero-content { grid-template-columns: 1fr; text-align: center; } .hero-desc { margin-left: auto; margin-right: auto; } .hero-actions { justify-content: center; } .hero-visual { display: none; } .about-grid { grid-template-columns: 1fr; text-align: center; } .about-avengers-logo { width: 200px; height: 200px; } }
+@media (max-width: 768px) { .nav-links { position: fixed; top: 70px; left: 0; right: 0; background: rgba(255,255,255,.95); backdrop-filter: blur(16px); flex-direction: column; padding: 24px; gap: 0; border-bottom: 1px solid var(--border); transform: translateY(-120%); transition: transform var(--transition); } .nav-links.open { transform: translateY(0); } .nav-link { display: block; padding: 12px 0; font-size: 16px; } .hamburger { display: flex; } .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); } .hamburger.active span:nth-child(2) { opacity: 0; } .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); } .members-grid { grid-template-columns: 1fr; } .modal-stats { grid-template-columns: repeat(3,1fr); gap: 8px; } .modal-stat { padding: 12px; } .footer-content { flex-direction: column; gap: 8px; text-align: center; } .filter-bar { gap: 8px; } .filter-btn { padding: 8px 16px; font-size: 13px; } }
+@media (max-width: 480px) { .section { padding: 60px 0; } .about-stats { grid-template-columns: repeat(3,1fr); gap: 12px; } .hero-actions { flex-direction: column; } .hero-actions .btn { width: 100%; } .about-stats { grid-template-columns: 1fr; } .modal-body { padding: 24px; } }
+  </style>
+</head>
+<body>
+
+<nav id="navbar" class="nav">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">Avengers</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#members" class="nav-link">Members</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<header id="home" class="hero">
+  <div class="hero-bg">
+    <div class="gradient-blob blob-1"></div>
+    <div class="gradient-blob blob-2"></div>
+    <div class="gradient-blob blob-3"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-text">
+      <p class="hero-greeting">Marvel's The Avengers</p>
+      <h1 class="hero-name">Assemble!</h1>
+      <p class="hero-title">Information About Earth's Mightiest Heroes</p>
+      <p class="hero-desc">Explore detailed information about each member of the Avengers - the world's greatest champions united to protect humanity from threats beyond imagination.</p>
+      <div class="hero-actions">
+        <a href="#members" class="btn btn-primary">View Members</a>
+        <a href="#about" class="btn btn-secondary">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="card-header">
+          <div class="card-dot"></div>
+          <div class="card-dot magenta"></div>
+          <div class="card-dot blue"></div>
+        </div>
+        <div class="card-body">
+          <div class="code-line"><span class="keyword">const</span> <span class="var">team</span> = <span class="string">"Avengers Assemble"</span>;</div>
+          <div class="code-line"><span class="keyword">await</span> <span class="func">protect</span>(<span class="string">"Earth"</span>);</div>
+          <div class="code-indent"><span class="func">fight</span>(<span class="string">"-evil"</span>);</div>
+          <div class="code-indent"><span class="func">save</span>(<span class="string">"world"</span>);</div>
+          <div class="code-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator"><div class="scroll-line"></div></div>
+</header>
+<section id="members" class="section members"><div class="container"><div class="section-header"><p class="section-label">Roster</p><h2 class="section-title">Avengers Members</h2><p class="section-subtitle">Discover the incredible heroes who make up the Avengers team</p></div><div class="filter-bar"><button class="filter-btn active" data-filter="all">All Heroes</button><button class="filter-btn " data-filter="core">Founding</button><button class="filter-btn " data-filter="earth">Earth</button></div><div class="members-grid">
+    <div class="member-card" data-name="Captain America" data-alias="Steve Rogers">
+      <div class="member-banner" style="background: linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa)">
+        <img src="Captain America.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 1%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Captain America</h3>
+        <p class="member-alias">Steve Rogers</p>
+        <p class="member-desc">A super-soldier and the leader of the Avengers. Steve Rogers is a symbol of courage, honor, and freedom, wielding the iconic vibranium shield.</p>
+        <div class="member-tags"><span class="member-tag">Leadership</span><span class="member-tag">Shield</span><span class="member-tag">Super Soldier</span><span class="member-tag">Tactician</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">85</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">90</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">95</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Iron Man" data-alias="Tony Stark">
+      <div class="member-banner" style="background: linear-gradient(135deg, #b91c1c, #dc2626, #f87171)">
+        <img src="ironman.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 25%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Iron Man</h3>
+        <p class="member-alias">Tony Stark</p>
+        <p class="member-desc">Genius billionaire inventor who creates advanced technology and powered armor suits to fight evil and protect the world.</p>
+        <div class="member-tags"><span class="member-tag">Armor</span><span class="member-tag">Flight</span><span class="member-tag">Genius</span><span class="member-tag">Technology</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">80</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">100</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">75</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Thor" data-alias="Thor Odinson">
+      <div class="member-banner" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6, #fbbf24)">
+        <img src="Thor.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 35%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Thor</h3>
+        <p class="member-alias">Thor Odinson</p>
+        <p class="member-desc">The Norse God of Thunder, wielder of the mighty hammer Mjolnir, and an Asgardian warrior defending the Nine Realms.</p>
+        <div class="member-tags"><span class="member-tag">Hammer</span><span class="member-tag">Lightning</span><span class="member-tag">Asgardian</span><span class="member-tag">God</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">100</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">70</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">95</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Hulk" data-alias="Bruce Banner">
+      <div class="member-banner" style="background: linear-gradient(135deg, #15803d, #22c55e, #4ade80)">
+        <img src="the Hulk.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 5%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Hulk</h3>
+        <p class="member-alias">Bruce Banner</p>
+        <p class="member-desc">The mighty force of nature. When anger takes control, Dr. Banner transforms into the incredible Hulk, the strongest there is.</p>
+        <div class="member-tags"><span class="member-tag">Strength</span><span class="member-tag">Gamma</span><span class="member-tag">Transformation</span><span class="member-tag">Regeneration</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">100</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">90</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">85</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Giantman" data-alias="Hank Pym">
+      <div class="member-banner" style="background: linear-gradient(135deg, #7c3aed, #8b5cf6, #a78bfa)">
+        <img src="Giant-Man.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 35%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Giantman</h3>
+        <p class="member-alias">Hank Pym</p>
+        <p class="member-desc">A skilled thief turned hero who can shrink to the size of an ant or grow to enormous size using Pym Particles.</p>
+        <div class="member-tags"><span class="member-tag">Size Change</span><span class="member-tag">Ants</span><span class="member-tag">Pym Particles</span><span class="member-tag">Stealth</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">60</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">75</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">70</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Wasp" data-alias="Janet Van Dyne">
+      <div class="member-banner" style="background: linear-gradient(135deg, #d946ef, #e879f9, #f0abfc)">
+        <img src="Wasp (Character) - Comic Vine.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 20%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Wasp</h3>
+        <p class="member-alias">Janet Van Dyne</p>
+        <p class="member-desc">A fierce Avenger who can shrink to insect size, grow in size, and fly using bio-energy wings with venomous stinger capabilities.</p>
+        <div class="member-tags"><span class="member-tag">Size Change</span><span class="member-tag">Flight</span><span class="member-tag">Stinger</span><span class="member-tag">Martial Arts</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">65</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">80</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">85</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Hawkeye" data-alias="Clint Barton">
+      <div class="member-banner" style="background: linear-gradient(135deg, #ca8a04, #eab308, #fde047)">
+        <img src="Hawkeye.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 13%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Hawkeye</h3>
+        <p class="member-alias">Clint Barton</p>
+        <p class="member-desc">A master archer and marksman who fights with his trusty bow and a wide array of specialized trick arrows.</p>
+        <div class="member-tags"><span class="member-tag">Bow</span><span class="member-tag">Archery</span><span class="member-tag">Tactician</span><span class="member-tag">Martial Arts</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">50</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">75</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">80</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Vision" data-alias="Vision">
+      <div class="member-banner" style="background: linear-gradient(135deg, #c026d3, #d946ef, #f5d0fe)">
+        <img src="Vision_.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 35%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Vision</h3>
+        <p class="member-alias">Vision</p>
+        <p class="member-desc">An android superhero created from the Mind Stone and Ultron's body, Vision combines synthetic power with a noble soul.</p>
+        <div class="member-tags"><span class="member-tag">Mind Stone</span><span class="member-tag">Intangibility</span><span class="member-tag">Flight</span><span class="member-tag">Android</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">90</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">95</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">80</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Scarlet Witch" data-alias="Wanda Maximoff">
+      <div class="member-banner" style="background: linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)">
+        <img src="Scarlet Witch.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 25%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Scarlet Witch</h3>
+        <p class="member-alias">Wanda Maximoff</p>
+        <p class="member-desc">One of the most powerful beings in the Marvel Universe, wielding chaotic magic that can alter reality itself.</p>
+        <div class="member-tags"><span class="member-tag">Chaos Magic</span><span class="member-tag">Reality Warp</span><span class="member-tag">Telekinesis</span><span class="member-tag">Mutant</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">100</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">75</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">70</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Black Widow" data-alias="Natasha Romanoff">
+      <div class="member-banner" style="background: linear-gradient(135deg, #1e1b4b, #4338ca, #6366f1)">
+        <img src="Black Widow.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 50%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Black Widow</h3>
+        <p class="member-alias">Natasha Romanoff</p>
+        <p class="member-desc">A master spy, elite combatant, and expert infiltrator. Natasha uses her exceptional skills to protect the world as a Avenger.</p>
+        <div class="member-tags"><span class="member-tag">Combat</span><span class="member-tag">Espionage</span><span class="member-tag">Weapons</span><span class="member-tag">Tactician</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">55</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">90</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">90</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Wonder Man" data-alias="Simon Williams">
+      <div class="member-banner" style="background: linear-gradient(135deg, #0891b2, #06b6d4, #67e8f9)">
+        <img src="Wonderman.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 10%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Wonder Man</h3>
+        <p class="member-alias">Simon Williams</p>
+        <p class="member-desc">A powerful hero with ionic energy abilities, known for his superhuman strength, durability, and flight.</p>
+        <div class="member-tags"><span class="member-tag">Ionic Energy</span><span class="member-tag">Strength</span><span class="member-tag">Flight</span><span class="member-tag">Durability</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">85</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">75</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">80</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="member-card" data-name="Captain Marvel" data-alias="Carol Danvers">
+      <div class="member-banner" style="background: linear-gradient(135deg, #c2410c, #ea580c, #fb923c)">
+        <img src="Captain Marvel.jpg" style="width: 300%; height: 200px; object-fit: cover; object-position: 50% 5%;">
+      </div>
+      <div class="member-info">
+        <h3 class="member-name">Captain Marvel</h3>
+        <p class="member-alias">Carol Danvers</p>
+        <p class="member-desc">One of the most powerful heroes in the universe, with cosmic powers including energy projection, flight at light speed, and superhuman strength.</p>
+        <div class="member-tags"><span class="member-tag">Cosmic Powers</span><span class="member-tag">Energy Projection</span><span class="member-tag">Flight</span><span class="member-tag">Super Strength</span></div>
+        <div class="member-stats">
+          <div class="member-stat"><span class="member-stat-val">95</span><span class="member-stat-label">Power</span></div>
+          <div class="member-stat"><span class="member-stat-val">80</span><span class="member-stat-label">Intel</span></div>
+          <div class="member-stat"><span class="member-stat-val">85</span><span class="member-stat-label">Combat</span></div>
+        </div>
+      </div>
+    </div></div></div></section>
+
+<section id="about" class="section avengers-about">
+  <div class="container">
+    <div class="section-header"><p class="section-label">About</p><h2 class="section-title">The Avengers</h2></div>
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-avengers-logo">
+          <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 5 L85 20 V55 C85 75 68 90 50 95 C32 90 15 75 15 55 V20 Z" stroke="url(#avGrad)" stroke-width="4" fill="none"/>
+            <path d="M35 45 L45 55 L65 35" stroke="url(#avGrad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <defs><linearGradient id="avGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#d946ef"/></linearGradient></defs>
+          </svg>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="about-lead">The Avengers are a team of the world's most powerful superheroes, dedicated to protecting Earth from cosmic and terrestrial threats.</p>
+        <p>Founded by Nick Fury during a time of global crisis, the Avengers bring together exceptional individuals with extraordinary abilities. From genius billionaires to Norse gods, each member contributes unique strengths to the team. Together, they have faced threats that no single hero could withstand.</p>
+        <p>With headquarters at Avengers Compound, the team operates around the clock, ready to respond to any threat. Their bond transcends differences - united by a shared commitment to justice and the greater good.</p>
+        <div class="about-stats">
+          <div class="stat"><span class="stat-number">12</span><span class="stat-label">Members</span></div>
+          <div class="stat"><span class="stat-number">∞</span><span class="stat-label">Threats Defeated</span></div>
+          <div class="stat"><span class="stat-number">1</span><span class="stat-label">World Protected</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-content">
+    <p>© 2026 Avengers Information. All rights reserved.</p>
+    <p>Built with passion for Marvel.</p>
+  </div>
+</footer>
+<a href="#home" class="back-to-top" id="backToTop" aria-label="Back to top">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</a>
+
+<script>var members=[{"name":"Captain America","alias":"Steve Rogers","banner":"linear-gradient(135deg, #1e40af, #3b82f6, #60a5fa)","initial":"CA","desc":"A super-soldier and the leader of the Avengers. Steve Rogers is a symbol of courage, honor, and freedom, wielding the iconic vibranium shield.","realName":"Steven Grant Rogers","origin":"From a weak young man in Brooklyn, Steve was enhanced to the peak of human perfection by the Super-Soldier Serum during World War II.","abilities":"Superhuman strength, speed, agility, stamina, and durability. Master tactician, expert martial artist, skilled with shield and firearms.","power":85,"intel":90,"combat":95,"tags":["Leadership","Shield","Super Soldier","Tactician"]},
+                      {"name":"Iron Man","alias":"Tony Stark","banner":"linear-gradient(135deg, #b91c1c, #dc2626, #f87171)","initial":"IM","desc":"Genius billionaire inventor who creates advanced technology and powered armor suits to fight evil and protect the world.","realName":"Anthony Edward Stark","origin":"A brilliant inventor and CEO of Stark Industries, Tony built his first suit of armor to escape captivity and later became a founding Avenger.","abilities":"Genius-level intellect, powered armor suits with flight, energy blasts, repulsors, and advanced AI systems. Master engineer and inventor.","power":80,"intel":100,"combat":75,"tags":["Armor","Flight","Genius","Technology"]},
+                       {"name":"Thor","alias":"Thor Odinson","banner":"linear-gradient(135deg, #1d4ed8, #3b82f6, #fbbf24)","initial":"TH","desc":"The Norse God of Thunder, wielder of the mighty hammer Mjolnir, and an Asgardian warrior defending the Nine Realms.","realName":"Thor Odinson","origin":"Son of Odin and heir to the throne of Asgard, Thor was exiled to Earth where he learned humility and became an Avenger.","abilities":"Asgardian physiology, control of lightning and storms, Mjolnir/wielder powers, flight, extreme longevity, and immense strength.","power":100,"intel":70,"combat":95,"tags":["Hammer","Lightning","Asgardian","God"]},
+                        {"name":"Hulk","alias":"Bruce Banner","banner":"linear-gradient(135deg, #15803d, #22c55e, #4ade80)","initial":"HK","desc":"The mighty force of nature. When anger takes control, Dr. Banner transforms into the incredible Hulk, the strongest there is.","realName":"Robert Bruce Banner","origin":"Exposed to gamma radiation during an experiment, Dr. Banner gains the ability to transform into the Hulk when angered or stressed.","abilities":"Near-unlimited strength that increases with rage, extreme durability, regeneration, and genius-level intellect as Dr. Banner.","power":100,"intel":90,"combat":85,"tags":["Strength","Gamma","Transformation","Regeneration"]},
+                         {"name":"Giantman","alias":"Hank Pym","banner":"linear-gradient(135deg, #7c3aed, #8b5cf6, #a78bfa)","initial":"HP","desc":"A skilled thief turned hero who can shrink to the size of an ant or grow to enormous size using Pym Particles.","realName":"Scott Edward Harris Lang","origin":"A former convict with a heart of gold, Scott discovered the Ant-Man suit and became a hero, later joining the Avengers.","abilities":"Size manipulation (shrink/grow), ability to communicate with ants, enhanced strength at large size, and expert thief skills.","power":60,"intel":75,"combat":70,"tags":["Size Change","Ants","Pym Particles","Stealth"]},
+                          {"name":"Wasp","alias":"Hope Van Dyne","banner":"linear-gradient(135deg, #d946ef, #e879f9, #f0abfc)","initial":"WP","desc":"A fierce Avenger who can shrink to insect size, grow in size, and fly using bio-energy wings with venomous stinger capabilities.","realName":"Hope Van Dyne","origin":"Daughter of Hank Pym and Janet Van Dyne, Hope trained in both martial arts and Pym Particles technology to become the Wasp.","abilities":"Size manipulation, flight via bio-wings, bio-energy blasts, enhanced strength at any size, and world-class martial artist.","power":65,"intel":80,"combat":85,"tags":["Size Change","Flight","Stinger","Martial Arts"]},
+                           {"name":"Hawkeye","alias":"Clint Barton","banner":"linear-gradient(135deg, #ca8a04, #eab308, #fde047)","initial":"HK","desc":"A master archer and marksman who fights with his trusty bow and a wide array of specialized trick arrows.","realName":"Clinton Francis Barton","origin":"A self-taught archery expert from Waverly, Iowa, Clint joined the Avengers as one of the few non-superpowered members.","abilities":"World-class archery skills, expert marksman, expert tactician, martial arts proficiency, and specialized trick arrows.","power":50,"intel":75,"combat":80,"tags":["Bow","Archery","Tactician","Martial Arts"]},
+                            {"name":"Vision","alias":"Vision","banner":"linear-gradient(135deg, #c026d3, #d946ef, #f5d0fe)","initial":"VI","desc":"An android superhero created from the Mind Stone and Ultron's body, Vision combines synthetic power with a noble soul.","realName":"Vision","origin":"Created by Ultron but brought to life by the Mind Stone, Vision was reassembled by Tony Stark and Bruce Banner as a hero.","abilities":"Flight, density manipulation (intangibility), energy projection via Mind Stone, superhuman strength, speed, and genius intellect.","power":90,"intel":95,"combat":80,"tags":["Mind Stone","Intangibility","Flight","Android"]},
+                             {"name":"Scarlet Witch","alias":"Wanda Maximoff","banner":"linear-gradient(135deg, #7c3aed, #a855f7, #c084fc)","initial":"SW","desc":"One of the most powerful beings in the Marvel Universe, wielding chaotic magic that can alter reality itself.","realName":"Wanda Django Maximoff","origin":"Born a mutant in Sokovia, Wanda gained her powers through experimentation with the Mind Stone and became one of the most powerful Avengers.","abilities":"Chaos magic, reality warping, telekinesis, energy projection, mind manipulation, and hex casting of extraordinary power.","power":100,"intel":75,"combat":70,"tags":["Chaos Magic","Reality Warp","Telekinesis","Mutant"]}, 
+                              {"name":"Black Widow","alias":"Natasha Romanoff","banner":"linear-gradient(135deg, #1e1b4b, #4338ca, #6366f1)","initial":"BW","desc":"A master spy, elite combatant, and expert infiltrator. Natasha uses her exceptional skills to protect the world as a Avenger.","realName":"Natalia Alianovna Romanova","origin":"Trained from childhood in espionage and combat by Soviet agents, Natasha defected to the US and became a founding Avenger.","abilities":"Master martial artist, expert spy and infiltrator, peak human conditioning, expert with weapons, and brilliant tactical strategist.","power":55,"intel":90,"combat":90,"tags":["Combat","Espionage","Weapons","Tactician"]},
+                               {"name":"Wonder Man","alias":"Simon Williams","banner":"linear-gradient(135deg, #0891b2, #06b6d4, #67e8f9)","initial":"WM","desc":"A powerful hero with ionic energy abilities, known for his superhuman strength, durability, and flight.","realName":"Simon Williams","origin":"A businessman who was experimented on with ionic energy, Simon Williams became Wonder Man with incredible power.","abilities":"Superhuman strength, durability, and speed. Ionic energy manipulation, flight, and near-immortality.","power":85,"intel":75,"combat":80,"tags":["Ionic Energy","Strength","Flight","Durability"]},
+                                {"name":"Captain Marvel","alias":"Carol Danvers","banner":"linear-gradient(135deg, #c2410c, #ea580c, #fb923c)","initial":"CM","desc":"One of the most powerful heroes in the universe, with cosmic powers including energy projection, flight at light speed, and superhuman strength.","realName":"Carol Danvers","origin":"A former Air Force officer, Carol gained cosmic powers through an accident involving Kree technology and became Captain Marvel.","abilities":"Cosmic energy absorption and projection, light-speed flight, superhuman strength, durability, and endurance.","power":95,"intel":80,"combat":85,"tags":["Cosmic Powers","Energy Projection","Flight","Super Strength"]}
+                    ];
+(function(){
+'use strict';
+var hamburger=document.getElementById('hamburger');
+var navLinks=document.getElementById('navLinks');
+var backToTop=document.getElementById('backToTop');
+var navbar=document.getElementById('navbar');
+var sections=document.querySelectorAll('section[id]');
+var navItems=document.querySelectorAll('.nav-link');
+var memberCards=document.querySelectorAll('.member-card');
+var filterBtns=document.querySelectorAll('.filter-btn');
+var modalOverlay=document.createElement('div');
+modalOverlay.className='modal-overlay';
+document.body.appendChild(modalOverlay);
+
+function toggleMobileMenu(){hamburger.classList.toggle('active');navLinks.classList.toggle('open');}
+function closeMobileMenu(){hamburger.classList.remove('active');navLinks.classList.remove('open');}
+function buildModal(m){
+  var powersArr = m.abilities.split(',').map(function(s){return s.trim();});
+  modalOverlay.innerHTML = '<div class="modal"><button class="modal-close">&times;</button><div class="modal-banner" style="background:'+m.banner+'"><span class="member-initial">'+m.initial+'</span></div><div class="modal-body"><h2 class="modal-name">'+m.name+'</h2><p class="modal-alias">'+m.alias+'</p><div class="modal-stats"><div class="modal-stat"><span class="modal-stat-val">'+m.power+'</span><span class="modal-stat-label">Power</span></div><div class="modal-stat"><span class="modal-stat-val">'+m.intel+'</span><span class="modal-stat-label">Intel</span></div><div class="modal-stat"><span class="modal-stat-val">'+m.combat+'</span><span class="modal-stat-label">Combat</span></div></div><div class="modal-section"><h4>Real Name</h4><p>'+m.realName+'</p></div><div class="modal-section"><h4>Origin</h4><p>'+m.origin+'</p></div><div class="modal-section"><h4>Abilities</h4><p>'+m.abilities+'</p></div><div class="modal-section"><h4>Powers & Skills</h4><div class="modal-powers">'+powersArr.map(function(p){return '<span class="modal-power">'+p+'</span>';}).join('')+'</div></div><div class="modal-section"><h4>Overview</h4><p>'+m.desc+'</p></div></div></div>';
+}
+function openModal(m){buildModal(m);modalOverlay.classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){modalOverlay.classList.remove('open');document.body.style.overflow='';}
+
+if(hamburger){hamburger.addEventListener('click',toggleMobileMenu);}
+navItems.forEach(function(item){item.addEventListener('click',closeMobileMenu);});
+function handleScroll() {
+  var sy = window.scrollY;
+  
+  if (sy > 400) {
+    backToTop.classList.add('visible');
+  } else {
+    backToTop.classList.remove('visible');
+  }
+  
+  if (sy > 50) {
+    navbar.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)';
+  } else {
+    navbar.style.boxShadow = 'none';
+  }
+  
+  var current = '';
+  
+  sections.forEach(function(section) {
+    var st = section.offsetTop - 100;
+    if (sy >= st) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navItems.forEach(function(link) {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+}
+window.addEventListener('scroll',handleScroll);
+backToTop.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});});
+
+memberCards.forEach(function(card){
+  var name=card.getAttribute('data-name');
+  var m=members.find(function(x){return x.name===name;});
+  card.addEventListener('click',function(){openModal(m);});
+});
+
+filterBtns.forEach(function(btn){
+  btn.addEventListener('click',function(){
+    filterBtns.forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    var f=btn.getAttribute('data-filter');
+    memberCards.forEach(function(card){
+      card.style.display='block';
+    });
+  });
+});
+
+modalOverlay.addEventListener('click',function(e){if(e.target===modalOverlay||e.target.classList.contains('modal-close')){closeModal();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeModal();}});
+
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor){
+  anchor.addEventListener('click',function(e){
+    var tid=this.getAttribute('href');
+    if(tid==='#')return;
+    var t=document.querySelector(tid);
+    if(t){e.preventDefault();var off=t.offsetTop-70;window.scrollTo({top:off,behavior:'smooth'});}
+  });
+});
+})();
+</script>
+</body>
+</html>
